@@ -41,7 +41,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO --delete"
           SOURCE: "deploy/"
-          REMOTE_HOST: "tutorial.eaglesoftwareteam.com"
+          REMOTE_HOST: "project2.eaglesoftwareteam.com"
           REMOTE_USER: ubuntu
           TARGET: "nodeapps/tutorial-backend"
       - name: Execute SSH commmands on remote server
@@ -49,13 +49,13 @@ jobs:
         env:
           NAME: "Root"
         with:
-          hosts: "ubuntu@tutorial.eaglesoftwareteam.com"
+          hosts: "ubuntu@project2.eaglesoftwareteam.com"
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
           debug: false
           command: |
-            cd nodeapps/tutorial-backend
+            cd nodeapps/2024/project3/t4
             npm install
-            sudo systemctl stop tutorial-backend
-            sudo cp tutorial-backend.service /lib/systemd/system/tutorial-backend.service
+            sudo systemctl stop resume-t4-backend
+            sudo cp resume-t4-backend.service /lib/systemd/system/resume-t4-backend.service
             sudo systemctl daemon-reload
-            sudo systemctl start tutorial-backend
+            sudo systemctl start resume-t4-backend
