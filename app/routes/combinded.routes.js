@@ -1,3 +1,4 @@
+const { authenticate } = require("../authorization/authorization.js");
 const express = require('express');
 const router = express.Router();
 
@@ -77,11 +78,11 @@ router.put('/professional-info/:id', updateProfessionalInfo);     // Update a pr
 router.delete('/professional-info/:id', deleteProfessionalInfo);  // Delete a professional info by ID
 
 // EXPERIENCE ROUTES
-router.get('/experience', getAllExperiences);         // Get all experiences
-router.post('/experience', createExperience);         // Create a new experience
-router.get('/experience/:id', getExperience);         // Get a single experience by ID
-router.put('/experience/:id', updateExperience);     // Update an experience by ID
-router.delete('/experience/:id', deleteExperience);  // Delete an experience by ID
+router.get('/experience',authenticate, getAllExperiences);         // Get all experiences
+router.post('/experience', authenticate, createExperience);         // Create a new experience
+router.get('/experience/:id', authenticate, getExperience);         // Get a single experience by ID
+router.put('/experience/:id', authenticate, updateExperience);     // Update an experience by ID
+router.delete('/experience/:id', authenticate, deleteExperience);  // Delete an experience by ID
 
 // SKILLS ROUTES
 router.get('/skills', getAllSkills);         // Get all skills

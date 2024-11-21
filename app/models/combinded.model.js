@@ -1,26 +1,23 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('resume_builder', 'username', 'password', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db.config'); // Adjust path as needed
 
 // User Model
-const User = sequelize.define('User', {
-  user_id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  name: {
-    type: DataTypes.STRING(100),
-    allowNull: false
-  },
-  email: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-    unique: true
-  }
-}, { timestamps: false });
+// const User = sequelize.define('User', {
+//   user_id: {
+//     type: DataTypes.INTEGER,
+//     autoIncrement: true,
+//     primaryKey: true
+//   },
+//   name: {
+//     type: DataTypes.STRING(100),
+//     allowNull: false
+//   },
+//   email: {
+//     type: DataTypes.STRING(100),
+//     allowNull: false,
+//     unique: true
+//   }
+// }, { timestamps: false });
 
 // Contact Info Model
 const ContactInfo = sequelize.define('Contact_Info', {
@@ -217,7 +214,6 @@ Resume.belongsTo(Certifications, { foreignKey: 'certification_id', onDelete: 'SE
 Resume.belongsTo(Projects, { foreignKey: 'project_id', onDelete: 'SET NULL' });
 
 module.exports = {
-  User,
   ContactInfo,
   ProfessionalInfo,
   Experience,

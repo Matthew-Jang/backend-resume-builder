@@ -1,5 +1,5 @@
 // controllers/index.js
-const { User, ContactInfo, ProfessionalInfo, Experience, Skill, Education, Certification, Project, Reference, Resume } = require('../models');
+const { ContactInfo, ProfessionalInfo, Experience, Skill, Education, Certification, Project, Reference, Resume } = require('../models');
   
   // Utility function for handling errors
   const handleError = (res, err) => res.status(500).json({ message: err.message });
