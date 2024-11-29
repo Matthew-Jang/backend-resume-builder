@@ -5,9 +5,9 @@ const cors = require("cors");
 
 const app = express();
 
-// const db = require("./app/models");
+const db = require("./app/models");
 
-// db.sequelize.sync();
+db.sequelize.sync();
 
 var corsOptions = {
   origin: "http://localhost:8081",
@@ -27,8 +27,9 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
-require("./app/routes/auth.routes.js")(app);
+require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/contact-info.routes")(app);
 // require("./app/routes/tutorial.routes")(app);
 // require("./app/routes/lesson.routes")(app);
 // require("./app/routes/combinded.routes.js")(app);
