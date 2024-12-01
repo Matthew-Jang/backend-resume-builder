@@ -10,6 +10,13 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     idle: dbConfig.pool.idle,
   },
 });
+sequelize.authenticate()
+    .then(() => {
+        console.log('Database connected successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
