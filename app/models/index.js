@@ -23,8 +23,8 @@ db.sequelize = sequelize;
 
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
-// db.tutorial = require("./tutorial.model.js")(sequelize, Sequelize);
-// db.lesson = require("./lesson.model.js")(sequelize, Sequelize);
+db.experience = require("./experience.model.js")(sequelize, Sequelize);
+
 
 // // foreign key for session
 db.user.hasMany(
@@ -38,28 +38,16 @@ db.session.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
-// foreign key for tutorials
-// db.user.hasMany(
-//   db.tutorial,
-//   { as: "tutorial" },
-//   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-// );
-// db.tutorial.belongsTo(
-//   db.user,
-//   { as: "user" },
-//   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-// );
-
-// foreign key for lessons
-// db.tutorial.hasMany(
-//   db.lesson,
-//   { as: "lesson" },
-//   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-// );
-// db.lesson.belongsTo(
-//   db.tutorial,
-//   { as: "tutorial" },
-//   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-// );
+// foreign key for experience
+db.user.hasMany(
+  db.experience,
+  { as: "experience" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.experience.belongsTo(
+  db.user,
+  { as: "user" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
 
 module.exports = db;
