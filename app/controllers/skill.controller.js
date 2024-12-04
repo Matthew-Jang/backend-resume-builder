@@ -74,7 +74,7 @@ exports.findOne = (req, res) => {
     const id = req.params.id;
 
 
-    Experience.findByPk(id)
+    Skill.findByPk(id)
         .then((data) => {
             if (data) {
                 res.send(data);
