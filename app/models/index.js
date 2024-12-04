@@ -54,7 +54,7 @@ db.experience.belongsTo(
 // foreign key for skill
 db.user.hasMany(
   db.skill,
-  { as: "experience" },
+  { as: "skill" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 db.skill.belongsTo(
