@@ -22,9 +22,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
     },
-    {
-      timestamps: false, // Enables createdAt and updatedAt fields
-    }
+    { timestamps: false },
 );
   
   
