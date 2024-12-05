@@ -4,10 +4,10 @@ module.exports = (app) => {
     const router = require("express").Router();
 
     // Fetch all resumes for a specific user
-    router.get("/users/:userId/resumes", [authenticate], resumes.getResumesByUser);
+    router.get("/users/:userId", [authenticate], resumes.getResumesByUser);
 
     // Other existing routes for resumes
-    router.post("/", [authenticate], resumes.createResume);
+    router.post("users/:userId", [authenticate], resumes.createResume);
     router.get("/", [authenticate], resumes.getAllResumes);
     router.get("/:id", [authenticate], resumes.getResumeById);
     router.put("/:id", [authenticate], resumes.updateResume);
