@@ -1,159 +1,141 @@
 const db = require("../models");
-const Contact_Info = db.contact_info;
+const ContactInfo = db.contact_info; // Assuming your model is named `contact_info`
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Contact_Info
+// Create and Save a new ContactInfo
 exports.create = (req, res) => {
-    // Validate request
-    if (!req.body.title) {
-        res.status(400).send({
-            message: "Content can not be empty!",
-        });
-        return;
-    }
+  // Validate request
+  if (!req.body.full_name || !req.body.email) {
+    res.status(400).send({
+      message: "Full name and email cannot be empty!",
+    });
+    return;
+  }
 
-    // Create an Contact_Info
-    const contact_info = {
-        userId: req.params.userId,
-        title: req.body.title,
-        employer: req.body.employer,
-        start_date: req.body.start_date,
-        end_date: req.body.end_date,
-        description: req.body.description,
-    };
+  // Create a ContactInfo
+  const contactInfo = {
+    userId: req.params.userId,
+    full_name: req.body.full_name,
+    email: req.body.email,
+    phone_number: req.body.phone_number,
+    address: req.body.address,
+  };
 
-
-    // Save Contact_Info in the database
-    Contact_Info.create(contact_info)
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while creating the Contact_Info.",
-            });
-        });
+  // Save ContactInfo in the database
+  ContactInfo.create(contactInfo)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while creating the ContactInfo.",
+      });
+    });
 };
 
-
-// Retrieve all Contact_Infos from the database
+// Retrieve all ContactInfos from the database
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title
-        ? { title: { [Op.like]: `%${title}%` } }
-        : null;
+  const full_name = req.query.full_name;
+  var condition = full_name ? { full_name: { [Op.like]: `%${full_name}%` } } : null;
 
-
-    Contact_Info.findAll({ where: condition })
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving contact_infos.",
-            });
-        });
+  ContactInfo.findAll({ where: condition })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving contact infos.",
+      });
+    });
 };
 
-
-// Retrieve all Contact_Infos for a User
+// Retrieve all ContactInfos for a User
 exports.findAllForUser = (req, res) => {
-    const userId = req.params.userId;
+  const userId = req.params.userId;
 
-
-    Contact_Info.findAll({ where: { userId: userId } })
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving contact_infos.",
-            });
-        });
+  ContactInfo.findAll({ where: { userId: userId } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving contact infos for the user.",
+      });
+    });
 };
 
-
-// Find a single Contact_Info by id
+// Find a single ContactInfo by id
 exports.findOne = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-
-    Contact_Info.findByPk(id)
-        .then((data) => {
-            if (data) {
-                res.send(data);
-            } else {
-                res.status(404).send({
-                    message: `Cannot find Contact_Info with id=${id}.`,
-                });
-            }
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: "Error retrieving Contact_Info with id=" + id,
-            });
+  ContactInfo.findByPk(id)
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find ContactInfo with id=${id}.`,
         });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving ContactInfo with id=" + id,
+      });
+    });
 };
 
-
-// Update an Contact_Info by the id in the request
+// Update a ContactInfo by the id in the request
 exports.update = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-
-    Contact_Info.update(req.body, { where: { id: id } })
-        .then((num) => {
-            if (num == 1) {
-                res.send({ message: "Contact_Info was updated successfully." });
-            } else {
-                res.send({
-                    message: `Cannot update Contact_Info with id=${id}. Maybe Contact_Info was not found or req.body is empty!`,
-                });
-            }
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: "Error updating Contact_Info with id=" + id,
-            });
+  ContactInfo.update(req.body, { where: { id: id } })
+    .then((num) => {
+      if (num == 1) {
+        res.send({ message: "ContactInfo was updated successfully." });
+      } else {
+        res.send({
+          message: `Cannot update ContactInfo with id=${id}. Maybe ContactInfo was not found or req.body is empty!`,
         });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating ContactInfo with id=" + id,
+      });
+    });
 };
 
-
-// Delete an Contact_Info with the specified id
+// Delete a ContactInfo with the specified id
 exports.delete = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-
-    Contact_Info.destroy({ where: { id: id } })
-        .then((num) => {
-            if (num == 1) {
-                res.send({ message: "Contact_Info was deleted successfully!" });
-            } else {
-                res.send({
-                    message: `Cannot delete Contact_Info with id=${id}. Maybe Contact_Info was not found!`,
-                });
-            }
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: "Could not delete Contact_Info with id=" + id,
-            });
+  ContactInfo.destroy({ where: { id: id } })
+    .then((num) => {
+      if (num == 1) {
+        res.send({ message: "ContactInfo was deleted successfully!" });
+      } else {
+        res.send({
+          message: `Cannot delete ContactInfo with id=${id}. Maybe ContactInfo was not found!`,
         });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete ContactInfo with id=" + id,
+      });
+    });
 };
 
-
-// Delete all Contact_Infos from the database
+// Delete all ContactInfos from the database
 exports.deleteAll = (req, res) => {
-    Contact_Info.destroy({ where: {}, truncate: false })
-        .then((nums) => {
-            res.send({ message: `${nums} Contact_Infos were deleted successfully!` });
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while removing all contact_infos.",
-            });
-        });
+  ContactInfo.destroy({ where: {}, truncate: false })
+    .then((nums) => {
+      res.send({ message: `${nums} ContactInfos were deleted successfully!` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while removing all contact infos.",
+      });
+    });
 };
-
-
-
