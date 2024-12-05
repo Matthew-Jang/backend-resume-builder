@@ -4,26 +4,26 @@ module.exports = (app) => {
     var router = require("express").Router();
   
     // Create a new Experience for a User
-    router.post("/:userId/experiences", [authenticate], experiences.create);
+    router.post("/:userId", [authenticate], experiences.create);
   
     // Retrieve all Experiences
     router.get("/", [authenticate], experiences.findAll);
   
     // Retrieve all Experiences for a User
-    router.get("/:userId/experiences", [authenticate], experiences.findAllForUser);
+    router.get("/:userId", [authenticate], experiences.findAllForUser);
   
     // Retrieve a single Experience with id
-    router.get("/:userId/experiences/:id", [authenticate], experiences.findOne);
+    router.get("/:userId/:id", [authenticate], experiences.findOne);
   
     // Update an Experience with id
-    router.put("/:userId/experiences/:id", [authenticate], experiences.update);
+    router.put("/:userId/:id", [authenticate], experiences.update);
   
     // Delete an Experience with id
-    router.delete("/:userId/experiences/:id", [authenticate], experiences.delete);
+    router.delete("/:userId/:id", [authenticate], experiences.delete);
   
     // Delete all Experiences
     router.delete("/", [authenticate], experiences.deleteAll);
   
-    app.use("/resume-t4/api", router);
+    app.use("/resume-t4/api/experiences", router);
   };
   

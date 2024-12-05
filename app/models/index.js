@@ -24,6 +24,9 @@ db.sequelize = sequelize;
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.experience = require("./experience.model.js")(sequelize, Sequelize);
+db.education = require("./education.model.js")(sequelize, Sequelize);
+db.resume = require("./resume.model.js")(sequelize, Sequelize);
+
 db.skill = require("./skill.model.js")(sequelize, Sequelize);
 
 
@@ -46,6 +49,45 @@ db.user.hasMany(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 db.experience.belongsTo(
+  db.user,
+  { as: "user" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.experience.belongsToMany(db.resume, {
+  through: "ResumeExperience",
+  as: "resumes",
+  foreignKey: "experienceId",
+  otherKey: "resumeId",
+  onDelete: "CASCADE",
+});
+
+
+// foreign key for resume
+db.user.hasMany(
+  db.resume,
+  { as: "resume" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.resume.belongsTo(
+  db.user,
+  { as: "user" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.resume.belongsToMany(db.experience, {
+  through: "Resume_Experience", // Intermediary table
+  as: "experiences",
+  foreignKey: "resumeId",
+  otherKey: "experienceId",
+  onDelete: "CASCADE",
+});
+
+// foreign key for experience
+db.user.hasMany(
+  db.education,
+  { as: "education" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.education.belongsTo(
   db.user,
   { as: "user" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
