@@ -104,5 +104,5 @@ db.skill.belongsTo(
   { as: "user" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
-
+ //
 module.exports = db;
