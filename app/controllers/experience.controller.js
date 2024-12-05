@@ -4,6 +4,9 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Experience
 exports.create = (req, res) => {
+
+    console.log("create exprience controller");
+
     // Validate request
     if (!req.body.title) {
         res.status(400).send({

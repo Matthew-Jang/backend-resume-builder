@@ -24,7 +24,7 @@ db.sequelize = sequelize;
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.session = require("./session.model.js")(sequelize, Sequelize);
 db.experience = require("./experience.model.js")(sequelize, Sequelize);
-
+db.education = require("./education.model.js")(sequelize, Sequelize);
 
 // // foreign key for session
 db.user.hasMany(
@@ -45,6 +45,18 @@ db.user.hasMany(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 db.experience.belongsTo(
+  db.user,
+  { as: "user" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+
+// foreign key for experience
+db.user.hasMany(
+  db.education,
+  { as: "education" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.education.belongsTo(
   db.user,
   { as: "user" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
