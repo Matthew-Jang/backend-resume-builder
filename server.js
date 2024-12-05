@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios");
 
 const app = express();
 
@@ -36,6 +37,36 @@ require("./app/routes/education.routes")(app);
 // require("./app/routes/tutorial.routes")(app);
 // require("./app/routes/lesson.routes")(app);
 // require("./app/routes/combinded.routes.js")(app);
+
+// ChatGPT API route
+app.post("/chat", async (req, res) => {
+  const { messages } = req.body;
+
+  if (!messages || !Array.isArray(messages)) {
+    return res.status(400).json({ error: "Invalid messages format." });
+  }
+
+  try {
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-3.5-turbo", // Change to another model if needed
+        messages,
+      },
+      {
+        headers: {
+          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error communicating with OpenAI API:", error.response?.data || error.message);
+    res.status(500).json({ error: "Failed to communicate with OpenAI API." });
+  }
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3100;
