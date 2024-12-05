@@ -22,10 +22,10 @@ module.exports = (sequelize, Sequelize) => {
             "Doctorate"
           ),
       },
-      start_year: {
+      start_date: {
         type: Sequelize.DATE,
       },
-      end_year: {
+      end_date: {
         type: Sequelize.DATE,
       },
       gpa: {
