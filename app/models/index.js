@@ -28,7 +28,7 @@ db.education = require("./education.model.js")(sequelize, Sequelize);
 db.resume = require("./resume.model.js")(sequelize, Sequelize);
 
 db.skill = require("./skill.model.js")(sequelize, Sequelize);
-
+db.reference = require("./reference.model.js")(sequelize, Sequelize);
 
 // // foreign key for session
 db.user.hasMany(
@@ -81,7 +81,7 @@ db.resume.belongsToMany(db.experience, {
   onDelete: "CASCADE",
 });
 
-// foreign key for experience
+// foreign key for education
 db.user.hasMany(
   db.education,
   { as: "education" },
@@ -104,5 +104,17 @@ db.skill.belongsTo(
   { as: "user" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
- //
+
+// foreign key for reference
+db.user.hasMany(
+  db.reference,
+  { as: "reference" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.reference.belongsTo(
+  db.user,
+  { as: "user" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+
 module.exports = db;

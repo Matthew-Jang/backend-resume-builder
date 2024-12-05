@@ -13,7 +13,7 @@ exports.create = (req, res) => {
     }
 
     // Create a Skill
-    const experience = {
+    const skill = {
         userId: req.params.userId,
         skillInfo: req.body.skillInfo,
     };

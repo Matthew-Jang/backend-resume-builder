@@ -24,6 +24,6 @@ module.exports = (app) => {
     // Delete all Skills
     router.delete("/", [authenticate], skills.deleteAll);
   
-    app.use("/resume-t4/api", router);
+    app.use("/resume-t4/api/skills", router);
   };
   
