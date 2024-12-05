@@ -16,6 +16,7 @@ exports.create = (req, res) => {
 
     // Create a Certification
     const certification = {
+        userId : req.params.userId,
         title: req.body.title,
         institution: req.body.institution,
         year_awarded: req.body.year_awarded,
