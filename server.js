@@ -32,6 +32,7 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/contact-info.routes")(app);
 require("./app/routes/experience.routes")(app);
 require("./app/routes/skill.routes")(app);
+require("./app/routes/education.routes")(app);
 // require("./app/routes/tutorial.routes")(app);
 // require("./app/routes/lesson.routes")(app);
 // require("./app/routes/combinded.routes.js")(app);
