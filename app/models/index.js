@@ -53,7 +53,7 @@ db.experience.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 db.experience.belongsToMany(db.resume, {
-  through: "ResumeExperience",
+  through: "Resume_Experience",
   as: "resumes",
   foreignKey: "experienceId",
   otherKey: "resumeId",
